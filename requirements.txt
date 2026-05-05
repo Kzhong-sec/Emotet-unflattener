@@ -1,0 +1,7 @@
+angr
+angr-management
+claripy
+capstone
+keystone-engine
+lief
+networkx
