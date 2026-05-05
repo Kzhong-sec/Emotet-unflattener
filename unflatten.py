@@ -74,7 +74,7 @@ def unflatten_all(fpath):
     print(
         f"Binary had {num_flat_funcs} functions flattend of {num_funcs}.\nSuccessfully unflattened {num_flat_funcs - len(not_fixed)} of {num_flat_funcs} functions"
     )
-    print(f"Successfully unflattened the following functinos: ")
+    print(f"Successfully unflattened the following functions: ")
     for i in successfully_unflattened:
         print(hex(i))
     ctx.write_bin()
