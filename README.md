@@ -4,7 +4,7 @@ A Python tool that recovers the original control flow of Emotet malware that has
 
 ## Notes
 - Supports both 32‑bit and 64‑bit Windows PE binaries
-- Tested against real Emotet binaries first submitted to VirusTotal in 2024
+- Tested against Emotet binaries first submitted to VirusTotal in 2024
 - Deobfuscation may take significant time (up to ~1 hour per binary), depending on sample complexity
 
 ## Prerequisites
