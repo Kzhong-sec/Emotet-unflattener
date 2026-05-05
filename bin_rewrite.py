@@ -2,31 +2,8 @@
 Binary rewrite backend for control-flow unflattening.
 Consumes a populated StateToNodeMapping instance which maps out the unflattenned control flow.
 
-This module creates a new executable PE section named '.unflat' and rewrites
-previously control-flow-flattened functions into this section in deobfuscated,
-structured form.
-
-High-level approach:
-    1. A new executable and writable '.unflat' section is appended to the PE.
-    2. Entire flattened functions are copied into this section.
-    3. During copying:
-        - All short conditional/unconditional branches and calls are expanded
-          to guaranteed-size near branches using padding.
-        - RIP-relative memory operands are fixed up to preserve semantics.
-    4. Control-flow dispatch constructs (dispatcher jumps, flattened conditionals)
-       are patched into direct control-flow edges between reconstructed basic blocks.
-    5. The original function entry point is replaced with a trampoline jump into
-       the rewritten version in '.unflat'.
-
-Assumptions / constraints:
-    - Target architecture is x86-64 PE (Windows).
-    - Input binary is position-independent and uses RIP-relative addressing.
-
-Output:
-    - A new binary with '_unflat.bin' suffix containing:
-        - Original code largely intact
-        - Deobfuscated functions relocated into '.unflat'
-        - Trampolines at original entries redirecting execution
+This module creates a new executable PE section named '.unflat' and rewrites deobfuscated functions here. Original functions
+are patched to jump to the deobfuscated function
 """
 
 from capstone import *

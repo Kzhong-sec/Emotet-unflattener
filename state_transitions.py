@@ -3,8 +3,7 @@ Control-flow unflattening analysis using symbolic execution and CFG reasoning.
 
 This module analyzes control flow flattened functions and reconstructs the
 mapping between dispatcher states and original basic-block entry points.
-It relies on CFG structure, dominance relationships, patterns
-in assembly, and targeted symbolic execution to recover state transitions.
+It utilises symbolic execution and patterns in assembly, to recover state transitions.
 
 Core responsibilities:
     - Identify whether a function is control flow flattened
@@ -12,7 +11,6 @@ Core responsibilities:
     - Identify the state register used by the dispatcher
     - Recover all transitions into the dispatcher (state assignments)
     - Recover all transitions out of the dispatcher (state resolution)
-    - Classify dispatcher interactions into distinct structural categories
     - Produce a StateToNodeMapping suitable for binary rewriting
 
 Dispatcher interaction categories:
@@ -27,7 +25,7 @@ Dispatcher interaction categories:
 
     - Unflattened conditionals:
         Conditional jumps where only one branch re-enters the dispatcher
-        and the fallthrough continues execution of original code.
+        and the other case continues execution of original code.
 
     - Dispatcher exits:
         Jumps leaving the dispatcher into original basic blocks after
@@ -546,26 +544,6 @@ class FunctionAnalyzer:
             disaptcher_entrances.append((i, end))
 
         return disaptcher_entrances
-
-    def assigns_imm_val(self, node_addr):
-        """
-        checks if a node assigns an immediate value to the state register
-        """
-        node = self.merge_calls(self._get_node(node_addr))
-        for insn in node.block.disassembly.insns:
-            if insn.mnemonic != "mov":
-                continue
-            op0 = insn.operands[0]
-            op1 = insn.operands[1]
-            if op0.type != 1:  # reg enum
-                continue
-            if insn.reg_name(op0.reg) != self.state_reg:
-                continue
-            if op1.type != 2:  # imm enum
-                continue
-            return True
-
-        return False
 
     def explore_dispatcher_entrances(self):
         """

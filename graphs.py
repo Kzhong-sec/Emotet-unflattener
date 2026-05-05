@@ -1,8 +1,6 @@
 """
 This module defines the mapping between flattened control-flow states and
 their corresponding basic block entry points in the original function.
-Populated by an Analyzer instance within calc_transition.py
-
 
 Three distinct patterns for entering the dispatcher were identified during
 analysis of flattened functions:
