@@ -470,12 +470,6 @@ class FunctionAnalyzer:
         return None
 
     def explore_conditional_nodes(self):
-        """
-        maps the address of the jump back into the dispatcher chain with the next states
-        - DFS is always attempted first
-        - fallback to non-DFS only if DFS finds nothing
-        - loop semantics are unchanged
-        """
         cnodes = self.get_conditional_nodes()
         if not cnodes:
             return None
