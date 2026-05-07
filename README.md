@@ -28,7 +28,6 @@ pip install -r requirements.txt
 ## Usage
 
 This tool is executed via the `src/unflatten.py` entry point.
-All required Python files must reside in the same directory.
 
 ### Arguments
 ```bash
