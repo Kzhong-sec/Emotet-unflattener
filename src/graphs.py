@@ -25,6 +25,7 @@ analysis of flattened functions:
        sbb     STATE_REG, STATE_REG
        and     STATE_REG, imm
        add     STATE_REG, imm
+       jmp     dispatcher
 
    Represented by: conditional_jmps
 
@@ -32,7 +33,11 @@ analysis of flattened functions:
    A conditional branch (jcc) preceded by assignment of an immediate state
    value, where the taken branch enters the dispatcher and the fallthrough
    path continues executing original (unflattened) basic-block code.
-
+   Example pattern:
+      mov STATE_REG, IMM
+      test reg, reg
+      jz dispatcher
+      
    Represented by: unflat_conditionals
 
 Additionally, dispatcher exits are tracked, which correspond to jump sites
